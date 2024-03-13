@@ -1,31 +1,64 @@
-package UserPackage;
-import TaskPackage.Task;
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
-import java.util.Scanner;
+package UserPackage;
+
+import TaskPackage.Task;
+import java.util.Vector;
+import UtilPackage.Util;
+
+import static UtilPackage.Util.*;
 
 public class User {
-    public String first_name,last_name,email;
-    private String username,password;
+    public String first_name;
+    public String last_name;
+    public String email;
+    private String username;
+    private String password;
     public int streak;
-    public Task createTask(){
+
+    Vector<Task> TaskList = new Vector<Task>();
+
+    public Task createTask(String taskName) {
         Task task1 = new Task();
-        Scanner inp = new Scanner(System.in);
-        String taskName = inp.next();
         task1.name = taskName;
+        if(!isTaskReptative(taskName)){
+            TaskList.add(task1);
+            return task1;
+        }
+        else {
+            System.out.println("Task is REPTATIVE!!! try again...");
+        }
         return task1;
     }
-    public String getFullName(){
+
+    public boolean isTaskReptative(String TaskName){
+        for(Task test : TaskList){
+            if(test.name == TaskName){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getFullName() {
         String FullName = "";
-        FullName = first_name+" "+last_name;
+        FullName = this.first_name + " " + this.last_name;
         return FullName;
     }
 
-    public User(String user,String pass,String Fname,String Lname,String mail){
-        username = user;
-        password = pass;
-        first_name = Fname;
-        last_name = Lname;
-        email = mail;
+    public User(String user, String pass, String Fname, String Lname, String mail) {
+        this.username = user;
+        this.password = pass;
+        this.first_name = Fname;
+        this.last_name = Lname;
+        this.email = mail;
+    }
+
+    public User() {
+
     }
 
     public void setUsername(String username) {
@@ -33,14 +66,18 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if(ispasswordvalid(password)) {
+            this.password = password;
+        }
+        else
+            System.out.println("Invalid Password");
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 }
